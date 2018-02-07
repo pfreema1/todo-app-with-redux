@@ -6,6 +6,7 @@ import Input from "./Input";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
+import Todos from "./ToDos";
 
 /*****************************
  ******************************
@@ -34,7 +35,18 @@ const initialState = {
   visibilityFilter: "SHOW_ALL",
   nextTodoId: 1,
   inputText: "",
-  todos: []
+  todos: [
+    {
+      id: 1,
+      text: "foofoo",
+      finished: false
+    },
+    {
+      id: 2,
+      text: "THE RAIN IN SPAIN FALLS MAINLY ON THE PLAIN",
+      finished: false
+    }
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -63,8 +75,6 @@ const reducer = (state = initialState, action) => {
     }
     default:
       return state;
-
-      console.log("store:  ", store);
   }
 };
 
@@ -83,6 +93,7 @@ class App extends Component<AppProps, AppState> {
         <AppWrapper>
           <Header>todo</Header>
           <Input />
+          <Todos />
         </AppWrapper>
       </Provider>
     );

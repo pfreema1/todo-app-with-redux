@@ -20,12 +20,22 @@ injectGlobal`
 
   ${styledNormalize}
 
-  // font-family: ${stylingGlobals.font};
+  
 
 
-  // body {
-  //   background: yellow;
-  // }
+  body {
+    font-family: ${stylingGlobals.font};
+    color: ${stylingGlobals.fontColor};
+    font-size: ${stylingGlobals.primaryFontSize};
+  }
+
+  ul, li { margin: 0; padding: 0; }
+
+  ul {
+    list-style-type: none;
+  }
+
+  
 `;
 
 ReactDOM.render(<App />, document.getElementById("root"));

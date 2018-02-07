@@ -17,7 +17,7 @@ const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90px;
+  height: 110px;
   font-size: 60px;
 `;
 

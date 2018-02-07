@@ -12,12 +12,12 @@ import { connect } from "react-redux";
  ******************************/
 const InputWrapper = styled.div`
   // outline: 1px solid red;
-  height: 50px;
+  height: 70px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: inset 0px 0px 30px -13px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 0px 30px -13px rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 `;
@@ -65,10 +65,12 @@ class Input extends Component<InputProps, InputState> {
   }
 
   handleChange = event => {
-    this.props.dispatch({
-      type: "UPDATE_INPUT_TEXT",
-      input: event.target.value
-    });
+    if (event.target.value.length < 45) {
+      this.props.dispatch({
+        type: "UPDATE_INPUT_TEXT",
+        input: event.target.value
+      });
+    }
   };
 
   handleFocus = () => {
