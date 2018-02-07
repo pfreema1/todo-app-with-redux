@@ -65,9 +65,8 @@ class Input extends Component<InputProps, InputState> {
   }
 
   handleChange = event => {
-    //normal:  this.setState({value: event.target.value});
     this.props.dispatch({
-      type: "UPDATE_TEXT",
+      type: "UPDATE_INPUT_TEXT",
       input: event.target.value
     });
   };
@@ -76,6 +75,16 @@ class Input extends Component<InputProps, InputState> {
     this.setState({
       isFocused: !this.state.isFocused
     });
+  };
+
+  handleSubmit = event => {
+    if (event.key === "Enter" && event.target.value) {
+      this.props.dispatch({
+        type: "INSERT_TODO",
+        id: this.props.nextTodoId,
+        text: this.props.inputText
+      });
+    }
   };
 
   render() {
@@ -89,6 +98,7 @@ class Input extends Component<InputProps, InputState> {
           onFocus={this.handleFocus}
           onBlur={this.handleFocus}
           hasText={this.props.inputText ? true : false}
+          onKeyDown={this.handleSubmit}
         />
       </InputWrapper>
     );
@@ -97,7 +107,8 @@ class Input extends Component<InputProps, InputState> {
 
 const mapStateToProps = state => {
   return {
-    inputText: state.inputText
+    inputText: state.inputText,
+    nextTodoId: state.nextTodoId
   };
 };
 
