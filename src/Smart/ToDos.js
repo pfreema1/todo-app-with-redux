@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
+import { Motion, spring } from "react-motion";
 
 /*****************************
  ******************************
@@ -91,11 +92,17 @@ class ToDos extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      checkBoxKey: 1
+    };
   }
 
   handleCheckBoxClick = id => {
     this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
+    //update state (checkBoxKey) so react-motion animation will restart
+    this.setState({
+      checkBoxKey: this.state.checkBoxKey + 1
+    });
   };
 
   render() {
@@ -106,13 +113,24 @@ class ToDos extends React.Component {
           return (
             <li key={elem.id}>
               <TodoWrapper>
-                <CompletionWrapper>
-                  <CheckBox
-                    onClick={this.handleCheckBoxClick.bind(null, elem.id)}
-                  >
-                    <CheckMark />
-                  </CheckBox>
-                </CompletionWrapper>
+                <Motion
+                  key={this.state.checkBoxKey}
+                  defaultStyle={{ scale: 0.7 }}
+                  style={{ scale: spring(1) }}
+                >
+                  {interpStyle => {
+                    return (
+                      <CompletionWrapper>
+                        <CheckBox
+                          onClick={this.handleCheckBoxClick.bind(null, elem.id)}
+                          style={{ transform: `scale(${interpStyle.scale})` }}
+                        >
+                          {elem.finished ? <CheckMark /> : null}
+                        </CheckBox>
+                      </CompletionWrapper>
+                    );
+                  }}
+                </Motion>
 
                 <TodoText>{elem.text}</TodoText>
                 <RemoveWrapper>X</RemoveWrapper>
