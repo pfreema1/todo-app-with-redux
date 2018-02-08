@@ -73,6 +73,23 @@ const reducer = (state = initialState, action) => {
         ]
       };
     }
+    case "TOGGLE_TODO_FINISH": {
+      return {
+        ...state,
+        todos: state.todos.map(todo => {
+          if (todo.id !== action.id) {
+            //this isnt the item we care about - keep as is
+            return todo;
+          }
+          //otherwise this is the one we want, return updated!
+          return {
+            id: todo.id,
+            text: todo.text,
+            finished: !todo.finished
+          };
+        })
+      };
+    }
     default:
       return state;
   }

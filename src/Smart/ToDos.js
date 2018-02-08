@@ -12,12 +12,14 @@ import { connect } from "react-redux";
  ******************************/
 
 const TodoWrapper = styled.div`
-  height: 70px;
+  min-height: 70px;
   // border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const CompletionWrapper = styled.div`
@@ -74,12 +76,13 @@ const CheckMark = styled.div`
   width: 30px;
   height: 10px;
   transform: rotate(-45deg);
-  border-left: 2px solid black;
-  border-bottom: 2px solid black;
-  animation: ${checkAnimation} 0.5s ease-out;
+  border-left: 2px solid ${stylingGlobals.fontColor};
+  border-bottom: 2px solid ${stylingGlobals.fontColor};
+  animation: ${checkAnimation} 0.3s ease-out;
   position: absolute;
   top: 50%;
   transform-origin: left top;
+  border-radius: 1px;
 `;
 
 /*****************************/
@@ -91,17 +94,22 @@ class ToDos extends React.Component {
     this.state = {};
   }
 
-  handleCheckBoxClick = () => {};
+  handleCheckBoxClick = id => {
+    this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
+  };
 
   render() {
     return (
       <ul>
         {this.props.todos.map(elem => {
+          console.log("elem:  ", elem);
           return (
-            <li>
+            <li key={elem.id}>
               <TodoWrapper>
                 <CompletionWrapper>
-                  <CheckBox onClick={this.handleCheckBoxClick}>
+                  <CheckBox
+                    onClick={this.handleCheckBoxClick.bind(null, elem.id)}
+                  >
                     <CheckMark />
                   </CheckBox>
                 </CompletionWrapper>
