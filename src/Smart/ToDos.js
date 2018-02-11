@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
-import { Motion, spring } from "react-motion";
+import { Motion, TransitionMotion, spring } from "react-motion";
 
 /*****************************
  ******************************
@@ -12,15 +12,15 @@ import { Motion, spring } from "react-motion";
  ******************************
  ******************************/
 
+const TODO_HEIGHT = 90;
+
 const TodoWrapper = styled.div`
-  min-height: 90px;
+  height: 100%;
   // border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
 `;
 
 const CompletionWrapper = styled.div`
@@ -89,11 +89,34 @@ const CheckMark = styled.div`
   -webkit-backface-visibility: hidden;
 `;
 
-/*****************************/
+/*****************************
+ ******************************
+ **
+ **		react-motion
+ **
+ ******************************
+ ******************************/
+
 const inputSpringConfig = {
   stiffness: 270,
   damping: 20
 };
+
+const willEnter = () => {
+  return {
+    height: 0,
+    opacity: 0
+  };
+};
+
+const willLeave = () => {
+  return {
+    height: spring(0),
+    opacity: spring(0)
+  };
+};
+
+/*****************************/
 
 class ToDos extends React.Component {
   constructor(props) {
@@ -104,41 +127,84 @@ class ToDos extends React.Component {
     this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
   };
 
+  /*****************************
+   **	getDefaultStyles and getStyles- returns array of 'style configs'
+   ******************************/
+
+  getDefaultStyles = () => {
+    return this.props.todos.map(todo => {
+      return {
+        key: todo.id,
+        style: { height: 0, opacity: 0 },
+        data: todo
+      };
+    });
+  };
+
+  getStyles = () => {
+    return this.props.todos.map(todo => {
+      return {
+        key: todo.id,
+        style: { height: spring(TODO_HEIGHT), opacity: spring(1) },
+        data: todo
+      };
+    });
+  };
+
   render() {
     return (
-      <ul>
-        {this.props.todos.map(elem => {
-          return (
-            <li key={elem.id}>
-              <TodoWrapper>
-                <CompletionWrapper>
-                  <Motion
-                    key={elem.id}
-                    defaultStyle={{ scale: 0.8 }}
-                    style={{ scale: spring(1) }}
-                  >
-                    {interpStyle => (
-                      <CheckBox
-                        style={{ transform: `scale(${interpStyle.scale})` }}
-                        onClick={this.handleCheckBoxClick.bind(null, elem.id)}
+      <TransitionMotion
+        defaultStyles={this.getDefaultStyles()}
+        styles={this.getStyles()}
+        willLeave={willLeave}
+        willEnter={willEnter}
+      >
+        {interpStyles => (
+          <ul>
+            {interpStyles.map(config => {
+              console.log("config:  ", config);
+              return (
+                <li
+                  style={{
+                    height: config.style.height,
+                    opacity: config.style.opacity
+                  }}
+                  key={config.data.id}
+                >
+                  <TodoWrapper>
+                    <CompletionWrapper>
+                      <Motion
+                        key={config.data.keyTick}
+                        defaultStyle={{ scale: 0.8 }}
+                        style={{ scale: spring(1) }}
                       >
-                        {elem.finished ? (
-                          <CheckMark style={{ opacity: 1 }} />
-                        ) : (
-                          <CheckMark style={{ opacity: 0 }} />
+                        {interpStyle => (
+                          <CheckBox
+                            style={{ transform: `scale(${interpStyle.scale})` }}
+                            onClick={this.handleCheckBoxClick.bind(
+                              null,
+                              config.data.id
+                            )}
+                          >
+                            {config.data.finished ? (
+                              <CheckMark style={{ opacity: 1 }} />
+                            ) : (
+                              <CheckMark style={{ opacity: 0 }} />
+                            )}
+                          </CheckBox>
                         )}
-                      </CheckBox>
-                    )}
-                  </Motion>
-                </CompletionWrapper>
+                      </Motion>
+                    </CompletionWrapper>
 
-                <TodoText>{elem.text}</TodoText>
-                <RemoveWrapper>X</RemoveWrapper>
-              </TodoWrapper>
-            </li>
-          );
-        })}
-      </ul>
+                    <TodoText>{config.data.text}</TodoText>
+                    <RemoveWrapper>X</RemoveWrapper>
+                  </TodoWrapper>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </TransitionMotion>
     );
   }
 }

@@ -39,12 +39,14 @@ const initialState = {
     {
       id: 1,
       text: "foofoo",
-      finished: false
+      finished: false,
+      keyTick: Date.now()
     },
     {
       id: 2,
       text: "THE RAIN IN SPAIN FALLS MAINLY ON THE PLAIN",
-      finished: false
+      finished: false,
+      keyTick: Date.now()
     }
   ]
 };
@@ -60,7 +62,8 @@ const reducer = (state = initialState, action) => {
       let tempTodo = {
         id: action.id,
         text: action.text,
-        finished: false
+        finished: false,
+        keyTick: Date.now()
       };
       return {
         ...state,
@@ -79,9 +82,10 @@ const reducer = (state = initialState, action) => {
           }
           //otherwise this is the one we want, return updated!
           return {
-            id: todo.id + 100, //way to retrigger anim - may not be sustainable!
+            id: todo.id,
             text: todo.text,
-            finished: !todo.finished
+            finished: !todo.finished,
+            keyTick: Date.now()
           };
         })
       };
