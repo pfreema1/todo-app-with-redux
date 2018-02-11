@@ -127,16 +127,29 @@ class ToDos extends Component {
   };
 
   getStyles = () => {
-    return this.props.todos.map(todo => {
-      return {
-        key: todo.id,
-        style: {
-          height: spring(TODO_HEIGHT),
-          opacity: spring(1, { stiffness: 120, damping: 30 })
-        },
-        data: todo
-      };
-    });
+    //filter method does the....filtering
+    return this.props.todos
+      .filter(todo => {
+        if (this.props.visibilityFilter === "all") {
+          return true;
+        } else if (this.props.visibilityFilter === "active") {
+          if (!todo.finished) return true;
+          else return false;
+        } else if (this.props.visibilityFilter === "completed") {
+          if (todo.finished) return true;
+          else return false;
+        }
+      })
+      .map(todo => {
+        return {
+          key: todo.id,
+          style: {
+            height: spring(TODO_HEIGHT),
+            opacity: spring(1, { stiffness: 120, damping: 30 })
+          },
+          data: todo
+        };
+      });
   };
 
   render() {
@@ -202,7 +215,8 @@ class ToDos extends Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todos,
+    visibilityFilter: state.visibilityFilter
   };
 };
 

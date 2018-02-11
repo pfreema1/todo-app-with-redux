@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
 import Todos from "./ToDos";
+import Filters from "./Filters";
 
 /*****************************
  ******************************
@@ -32,7 +33,7 @@ const AppWrapper = styled.div`
  ******************************/
 
 const initialState = {
-  visibilityFilter: "SHOW_ALL",
+  visibilityFilter: "all",
   inputText: "",
   editText: "",
   todos: [
@@ -158,6 +159,12 @@ const reducer = (state = initialState, action) => {
         })
       };
     }
+    case "CHANGE_FILTER": {
+      return {
+        ...state,
+        visibilityFilter: action.filter
+      };
+    }
     default:
       return state;
   }
@@ -178,6 +185,7 @@ class App extends Component<AppProps, AppState> {
         <AppWrapper>
           <Header>todo</Header>
           <Input />
+          <Filters />
           <Todos />
         </AppWrapper>
       </Provider>

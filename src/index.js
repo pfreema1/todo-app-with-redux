@@ -27,7 +27,7 @@ injectGlobal`
     font-family: ${stylingGlobals.font};
     color: ${stylingGlobals.fontColor};
     font-size: ${stylingGlobals.primaryFontSize};
-    box-sizing: border-box;
+    
   }
 
   ul, li { margin: 0; padding: 0; }
