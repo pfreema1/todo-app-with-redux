@@ -33,7 +33,7 @@ const AppWrapper = styled.div`
 
 const initialState = {
   visibilityFilter: "SHOW_ALL",
-  nextTodoId: 1,
+  nextTodoId: Date.now(),
   inputText: "",
   todos: [
     {
@@ -57,20 +57,16 @@ const reducer = (state = initialState, action) => {
         inputText: action.input
       };
     case "INSERT_TODO": {
-      console.log("in reducer - state:  ", state);
-      console.log("in reducer - action:  ", action);
+      let tempTodo = {
+        id: action.id,
+        text: action.text,
+        finished: false
+      };
       return {
         ...state,
         inputText: "",
         nextTodoId: action.id + 1,
-        todos: [
-          ...state.todos,
-          {
-            id: action.id,
-            text: action.text,
-            finished: false
-          }
-        ]
+        todos: [tempTodo].concat(state.todos)
       };
     }
     case "TOGGLE_TODO_FINISH": {
@@ -83,7 +79,7 @@ const reducer = (state = initialState, action) => {
           }
           //otherwise this is the one we want, return updated!
           return {
-            id: todo.id,
+            id: todo.id + 100, //way to retrigger anim - may not be sustainable!
             text: todo.text,
             finished: !todo.finished
           };

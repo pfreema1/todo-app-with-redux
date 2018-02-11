@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
+import { Motion, spring } from "react-motion";
 
 /*****************************
  ******************************
@@ -51,6 +52,11 @@ const ToDoInput = styled.input`
 
 /*****************************/
 
+const inputSpringConfig = {
+  stiffness: 270,
+  damping: 20
+};
+
 interface InputProps {}
 
 interface InputState {}
@@ -86,23 +92,36 @@ class Input extends Component<InputProps, InputState> {
         id: this.props.nextTodoId,
         text: this.props.inputText
       });
+    } else if (event.key === "Enter") {
+      this.setState({ isFocused: false });
+      event.target.blur();
     }
   };
 
   render() {
     return (
-      <InputWrapper>
-        <ChevronWrapper>❯</ChevronWrapper>
-        <ToDoInput
-          placeholder="What needs to be done?"
-          onChange={this.handleChange}
-          value={this.props.inputText}
-          onFocus={this.handleFocus}
-          onBlur={this.handleFocus}
-          hasText={this.props.inputText ? true : false}
-          onKeyDown={this.handleSubmit}
-        />
-      </InputWrapper>
+      <Motion
+        style={{
+          height: spring(this.state.isFocused ? 80 : 50, inputSpringConfig)
+        }}
+      >
+        {interpStyle => {
+          return (
+            <InputWrapper style={{ height: interpStyle.height }}>
+              <ChevronWrapper>❯</ChevronWrapper>
+              <ToDoInput
+                placeholder="What needs to be done?"
+                onChange={this.handleChange}
+                value={this.props.inputText}
+                onFocus={this.handleFocus}
+                onBlur={this.handleFocus}
+                hasText={this.props.inputText ? true : false}
+                onKeyDown={this.handleSubmit}
+              />
+            </InputWrapper>
+          );
+        }}
+      </Motion>
     );
   }
 }

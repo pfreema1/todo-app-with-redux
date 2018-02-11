@@ -13,7 +13,7 @@ import { Motion, spring } from "react-motion";
  ******************************/
 
 const TodoWrapper = styled.div`
-  min-height: 70px;
+  min-height: 90px;
   // border-top: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
@@ -79,58 +79,56 @@ const CheckMark = styled.div`
   transform: rotate(-45deg);
   border-left: 2px solid ${stylingGlobals.fontColor};
   border-bottom: 2px solid ${stylingGlobals.fontColor};
-  animation: ${checkAnimation} 0.3s ease-out;
+  animation: ${checkAnimation} 0.2s ease-out;
   position: absolute;
   top: 50%;
   transform-origin: left top;
   border-radius: 1px;
+  opacity: 0.7;
 `;
 
 /*****************************/
+const inputSpringConfig = {
+  stiffness: 270,
+  damping: 20
+};
 
 class ToDos extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      checkBoxKey: 1
-    };
   }
 
   handleCheckBoxClick = id => {
     this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
-    //update state (checkBoxKey) so react-motion animation will restart
-    this.setState({
-      checkBoxKey: this.state.checkBoxKey + 1
-    });
   };
 
   render() {
     return (
       <ul>
         {this.props.todos.map(elem => {
-          console.log("elem:  ", elem);
           return (
             <li key={elem.id}>
               <TodoWrapper>
-                <Motion
-                  key={this.state.checkBoxKey}
-                  defaultStyle={{ scale: 0.7 }}
-                  style={{ scale: spring(1) }}
-                >
-                  {interpStyle => {
-                    return (
-                      <CompletionWrapper>
-                        <CheckBox
-                          onClick={this.handleCheckBoxClick.bind(null, elem.id)}
-                          style={{ transform: `scale(${interpStyle.scale})` }}
-                        >
-                          {elem.finished ? <CheckMark /> : null}
-                        </CheckBox>
-                      </CompletionWrapper>
-                    );
-                  }}
-                </Motion>
+                <CompletionWrapper>
+                  <Motion
+                    key={elem.id}
+                    defaultStyle={{ scale: 0.8 }}
+                    style={{ scale: spring(1) }}
+                  >
+                    {interpStyle => (
+                      <CheckBox
+                        style={{ transform: `scale(${interpStyle.scale})` }}
+                        onClick={this.handleCheckBoxClick.bind(null, elem.id)}
+                      >
+                        {elem.finished ? (
+                          <CheckMark style={{ opacity: 1 }} />
+                        ) : (
+                          <CheckMark style={{ opacity: 0 }} />
+                        )}
+                      </CheckBox>
+                    )}
+                  </Motion>
+                </CompletionWrapper>
 
                 <TodoText>{elem.text}</TodoText>
                 <RemoveWrapper>X</RemoveWrapper>
