@@ -41,6 +41,7 @@ const TodoText = styled.div`
   align-items: center;
   height: 100%;
   overflow: hidden;
+  transition: all 0.5s;
 `;
 
 const CheckBox = styled.div`
@@ -198,7 +199,15 @@ class ToDos extends Component {
                     {config.data.isBeingEdited ? (
                       <EditInput id={config.data.id} value={config.data.text} />
                     ) : (
-                      <TodoText>{config.data.text}</TodoText>
+                      <TodoText
+                        style={
+                          config.data.finished
+                            ? { textDecoration: `line-through`, opacity: `0.3` }
+                            : null
+                        }
+                      >
+                        {config.data.text}
+                      </TodoText>
                     )}
 
                     <RemoveWrapper id={config.data.id} />
