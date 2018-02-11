@@ -89,9 +89,10 @@ class Input extends Component<InputProps, InputState> {
     if (event.key === "Enter" && event.target.value) {
       this.props.dispatch({
         type: "INSERT_TODO",
-        id: this.props.nextTodoId,
+        id: Date.now(),
         text: this.props.inputText
       });
+      event.target.blur();
     } else if (event.key === "Enter") {
       this.setState({ isFocused: false });
       event.target.blur();
@@ -128,8 +129,7 @@ class Input extends Component<InputProps, InputState> {
 
 const mapStateToProps = state => {
   return {
-    inputText: state.inputText,
-    nextTodoId: state.nextTodoId
+    inputText: state.inputText
   };
 };
 

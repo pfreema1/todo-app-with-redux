@@ -33,20 +33,19 @@ const AppWrapper = styled.div`
 
 const initialState = {
   visibilityFilter: "SHOW_ALL",
-  nextTodoId: Date.now(),
   inputText: "",
   todos: [
     {
-      id: 1,
+      id: 1 + "str",
       text: "foofoo",
       finished: false,
-      keyTick: Date.now()
+      keyTick: Date.now() + "str"
     },
     {
-      id: 2,
+      id: 2 + "str",
       text: "THE RAIN IN SPAIN FALLS MAINLY ON THE PLAIN",
       finished: false,
-      keyTick: Date.now()
+      keyTick: Date.now() + "str"
     }
   ]
 };
@@ -60,15 +59,14 @@ const reducer = (state = initialState, action) => {
       };
     case "INSERT_TODO": {
       let tempTodo = {
-        id: action.id,
+        id: action.id + "str",
         text: action.text,
         finished: false,
-        keyTick: Date.now()
+        keyTick: Date.now() + "str"
       };
       return {
         ...state,
         inputText: "",
-        nextTodoId: action.id + 1,
         todos: [tempTodo].concat(state.todos)
       };
     }
@@ -85,8 +83,16 @@ const reducer = (state = initialState, action) => {
             id: todo.id,
             text: todo.text,
             finished: !todo.finished,
-            keyTick: Date.now()
+            keyTick: Date.now() + "str"
           };
+        })
+      };
+    }
+    case "DELETE_TODO": {
+      return {
+        ...state,
+        todos: state.todos.filter(todo => {
+          return todo.id !== action.id;
         })
       };
     }

@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
 import { Motion, TransitionMotion, spring } from "react-motion";
+import RemoveWrapper from "./RemoveWrapper";
 
 /*****************************
  ******************************
@@ -39,14 +40,6 @@ const TodoText = styled.div`
   align-items: center;
   height: 100%;
   overflow: hidden;
-`;
-
-const RemoveWrapper = styled.div`
-  width: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
 `;
 
 const CheckBox = styled.div`
@@ -97,11 +90,6 @@ const CheckMark = styled.div`
  ******************************
  ******************************/
 
-const inputSpringConfig = {
-  stiffness: 270,
-  damping: 20
-};
-
 const willEnter = () => {
   return {
     height: 0,
@@ -112,17 +100,13 @@ const willEnter = () => {
 const willLeave = () => {
   return {
     height: spring(0),
-    opacity: spring(0)
+    opacity: spring(0, { stiffness: 700, damping: 50 })
   };
 };
 
 /*****************************/
 
-class ToDos extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class ToDos extends Component {
   handleCheckBoxClick = id => {
     this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
   };
@@ -145,7 +129,10 @@ class ToDos extends React.Component {
     return this.props.todos.map(todo => {
       return {
         key: todo.id,
-        style: { height: spring(TODO_HEIGHT), opacity: spring(1) },
+        style: {
+          height: spring(TODO_HEIGHT),
+          opacity: spring(1, { stiffness: 120, damping: 30 })
+        },
         data: todo
       };
     });
@@ -162,7 +149,6 @@ class ToDos extends React.Component {
         {interpStyles => (
           <ul>
             {interpStyles.map(config => {
-              console.log("config:  ", config);
               return (
                 <li
                   style={{
@@ -197,7 +183,7 @@ class ToDos extends React.Component {
                     </CompletionWrapper>
 
                     <TodoText>{config.data.text}</TodoText>
-                    <RemoveWrapper>X</RemoveWrapper>
+                    <RemoveWrapper id={config.data.id} />
                   </TodoWrapper>
                 </li>
               );
