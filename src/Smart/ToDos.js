@@ -54,6 +54,7 @@ const CheckBox = styled.div`
   height: 25px;
   width: 25px;
   border: 2px solid RGBA(156, 166, 211, 1);
+  -webkit-backface-visibility: hidden;
 `;
 
 const checkAnimation = keyframes`
@@ -85,6 +86,7 @@ const CheckMark = styled.div`
   transform-origin: left top;
   border-radius: 1px;
   opacity: 0.7;
+  -webkit-backface-visibility: hidden;
 `;
 
 /*****************************/
