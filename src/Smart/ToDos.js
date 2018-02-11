@@ -4,6 +4,7 @@ import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
 import { Motion, TransitionMotion, spring } from "react-motion";
 import RemoveWrapper from "./RemoveWrapper";
+import EditInput from "./EditInput";
 
 /*****************************
  ******************************
@@ -181,8 +182,12 @@ class ToDos extends Component {
                         )}
                       </Motion>
                     </CompletionWrapper>
+                    {config.data.isBeingEdited ? (
+                      <EditInput id={config.data.id} value={config.data.text} />
+                    ) : (
+                      <TodoText>{config.data.text}</TodoText>
+                    )}
 
-                    <TodoText>{config.data.text}</TodoText>
                     <RemoveWrapper id={config.data.id} />
                   </TodoWrapper>
                 </li>

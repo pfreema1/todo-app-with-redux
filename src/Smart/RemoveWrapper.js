@@ -31,7 +31,23 @@ class RemoveWrapper extends Component {
     this.props.dispatch({ type: "DELETE_TODO", id });
   };
 
-  handleEditClick = () => {};
+  handleEditClick = id => {
+    //only dispatch if not already editing another field,
+    //check this by making sure props.editText is ""
+    //the if statement below doesn't let you click off edit!
+    if (this.props.editText.length === 0) {
+      //send todos' current text to update 'editText'
+      let editText = this.props.todos.reduce((prevVal, todo) => {
+        if (todo.id === id) {
+          return todo.text;
+        } else {
+          return prevVal;
+        }
+      }, "");
+
+      this.props.dispatch({ type: "TOGGLE_EDIT", id, editText: editText });
+    }
+  };
 
   render() {
     return (
@@ -41,15 +57,20 @@ class RemoveWrapper extends Component {
         >
           X
         </DeleteWrapper>
-        <EditWrapper onClick={this.handleEditClick}>\\</EditWrapper>
+        <EditWrapper onClick={this.handleEditClick.bind(null, this.props.id)}>
+          \\
+        </EditWrapper>
       </Wrapper>
     );
   }
 }
 
+/*****************************/
+
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todos,
+    editText: state.editText
   };
 };
 
