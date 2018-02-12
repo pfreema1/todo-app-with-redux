@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
-import { Motion, TransitionMotion, spring } from "react-motion";
 
 const Wrapper = styled.textarea`
   display: inline;
@@ -19,7 +18,7 @@ const Wrapper = styled.textarea`
   vertical-align: middle;
 `;
 
-class EditInput extends React.Component {
+class EditInput extends Component {
   componentDidMount() {
     this.inputEl.focus();
   }
@@ -34,10 +33,6 @@ class EditInput extends React.Component {
   handleOnBlur = () => {
     //toggle todo edit
     this.props.dispatch({ type: "TOGGLE_EDIT", id: this.props.id });
-  };
-
-  handleOnFocus = () => {
-    console.log("ON FOCUS RUNNING");
   };
 
   handleSubmit = event => {
@@ -57,7 +52,6 @@ class EditInput extends React.Component {
         onBlur={this.handleOnBlur}
         onChange={this.handleChange}
         value={this.props.editText}
-        onFocus={this.handleOnFocus}
         onKeyDown={this.handleSubmit}
       />
     );

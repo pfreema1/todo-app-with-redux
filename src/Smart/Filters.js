@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
-import stylingGlobals from "../StylingGlobals";
+import styled from "styled-components";
 import { connect } from "react-redux";
-import { Motion, TransitionMotion, spring } from "react-motion";
 
 const Wrapper = styled.div`
   height: 30px;
@@ -28,6 +26,7 @@ const AllWrapper = styled.div`
     props.visibilityFilter === "all"
       ? "RGBA(80, 79, 92, 0.7)"
       : "RGBA(80, 79, 92, 0.3)"};
+  transition: all 0.3s;
 `;
 
 const ActiveWrapper = styled.div`
@@ -43,6 +42,7 @@ const ActiveWrapper = styled.div`
     props.visibilityFilter === "active"
       ? "RGBA(80, 79, 92, 0.7)"
       : "RGBA(80, 79, 92, 0.3)"};
+  transition: all 0.3s;
 `;
 
 const CompletedWrapper = styled.div`
@@ -60,11 +60,12 @@ const CompletedWrapper = styled.div`
     props.visibilityFilter === "completed"
       ? "RGBA(80, 79, 92, 0.7)"
       : "RGBA(80, 79, 92, 0.3)"};
+  transition: all 0.3s;
 `;
 
 /*****************************/
 
-class Filters extends React.Component {
+class Filters extends Component {
   constructor(props) {
     super(props);
 
@@ -72,7 +73,6 @@ class Filters extends React.Component {
   }
 
   handleClick = event => {
-    console.log(event.target.id);
     this.props.dispatch({ type: "CHANGE_FILTER", filter: event.target.id });
   };
 

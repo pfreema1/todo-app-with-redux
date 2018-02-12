@@ -112,16 +112,25 @@ const reducer = (state = initialState, action) => {
     case "TOGGLE_EDIT": {
       //determine if editText should be "" or the
       //currently selected todos' text
-      let tempEditText;
-      state.todos.map(todo => {
-        if (todo.id === action.id) {
-          if (todo.isBeingEdited) {
-            tempEditText = "";
+
+      const tempEditText = state.todos
+        .map(todo => {
+          if (todo.id === action.id) {
+            if (todo.isBeingEdited) {
+              // tempEditText = "";
+              return "";
+            } else {
+              // tempEditText = todo.text;
+              return todo.text;
+            }
           } else {
-            tempEditText = todo.text;
+            return null;
           }
-        }
-      });
+        })
+        .filter(elem => {
+          return elem !== null;
+        })
+        .join(); //changes array to string
 
       return {
         ...state,

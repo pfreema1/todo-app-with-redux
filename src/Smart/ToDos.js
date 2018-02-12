@@ -139,6 +139,8 @@ class ToDos extends Component {
         } else if (this.props.visibilityFilter === "completed") {
           if (todo.finished) return true;
           else return false;
+        } else {
+          return false;
         }
       })
       .map(todo => {

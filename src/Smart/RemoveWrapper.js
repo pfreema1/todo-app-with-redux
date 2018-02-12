@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
-import stylingGlobals from "../StylingGlobals";
+import styled from "styled-components";
 import { connect } from "react-redux";
-import { Motion, TransitionMotion, spring } from "react-motion";
+import Icon from "react-icons-kit";
+import { ic_close } from "react-icons-kit/md/ic_close";
+import { ic_edit } from "react-icons-kit/md/ic_edit";
 
 const Wrapper = styled.div`
   width: 20%;
@@ -22,7 +23,6 @@ const EditWrapper = styled.div``;
 class RemoveWrapper extends Component {
   constructor(props) {
     super(props);
-    console.log("props:  ", props);
 
     this.state = {};
   }
@@ -55,10 +55,10 @@ class RemoveWrapper extends Component {
         <DeleteWrapper
           onClick={this.handleDeleteClick.bind(null, this.props.id)}
         >
-          X
+          <Icon icon={ic_close} style={{ opacity: 0.7 }} />
         </DeleteWrapper>
         <EditWrapper onClick={this.handleEditClick.bind(null, this.props.id)}>
-          \\
+          <Icon icon={ic_edit} style={{ opacity: 0.7 }} />
         </EditWrapper>
       </Wrapper>
     );
