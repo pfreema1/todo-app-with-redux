@@ -98,7 +98,7 @@ class Filters extends Component<FiltersProps> {
   render() {
     return (
       <Wrapper>
-        <Link to="/" style={{ textDecoration: `none` }}>
+        <Link to="/todo/" style={{ textDecoration: `none` }}>
           <AllWrapper
             id="all"
             onClick={this.handleClick}
@@ -107,7 +107,7 @@ class Filters extends Component<FiltersProps> {
             All
           </AllWrapper>
         </Link>
-        <Link to="/active" style={{ textDecoration: `none` }}>
+        <Link to="/todo/active" style={{ textDecoration: `none` }}>
           <ActiveWrapper
             id="active"
             onClick={this.handleClick}
@@ -116,7 +116,7 @@ class Filters extends Component<FiltersProps> {
             Active
           </ActiveWrapper>
         </Link>
-        <Link to="/completed" style={{ textDecoration: `none` }}>
+        <Link to="/todo/completed" style={{ textDecoration: `none` }}>
           <CompletedWrapper
             id="completed"
             onClick={this.handleClick}

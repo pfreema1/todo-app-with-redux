@@ -208,8 +208,12 @@ class App extends Component<AppProps> {
         <Router>
           <AppBackground>
             {/*regex in path below makes it so the same component
-            will be rendered if at any of these paths: (root), 'active', or 'completed'*/}
-            <Route exact path="/(|active|completed)/" component={AppWrapper} />
+            will be rendered if at any of these paths: (root), 'active', or 'completed' -- also, note the path! it will not work locally unless you use localhost:3000/todo/  !!!!*/}
+            <Route
+              exact
+              path="/todo/(|active|completed)/"
+              component={AppWrapper}
+            />
           </AppBackground>
         </Router>
       </Provider>

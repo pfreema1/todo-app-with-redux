@@ -24,5 +24,6 @@
   },
   "devDependencies": {
     "flow-bin": "^0.65.0"
-  }
+  },
+  "homepage": "http://paulfreeman.design/todo"
 }
