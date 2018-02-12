@@ -31,6 +31,8 @@ type EditInputProps = {
 /*****************************/
 
 class EditInput extends Component<EditInputProps> {
+  inputEl: any;
+
   componentDidMount() {
     this.inputEl.focus();
   }

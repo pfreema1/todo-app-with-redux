@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
@@ -167,9 +169,7 @@ const store = createStore(reducer, applyMiddleware(logger));
 
 interface AppProps {}
 
-interface AppState {}
-
-class App extends Component<AppProps, AppState> {
+class App extends Component<AppProps> {
   componentDidMount() {
     //this handles updating the stores' visibility field
     //when the back/forward button is hit, this function will run

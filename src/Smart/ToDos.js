@@ -175,8 +175,6 @@ class ToDos extends Component<ToDosProps> {
         {interpStyles => (
           <ul>
             {interpStyles.map((config: any) => {
-              console.log("config:  ", config);
-
               return (
                 <li
                   style={{
