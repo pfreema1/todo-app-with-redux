@@ -1,8 +1,11 @@
+//@flow
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
 import { Motion, spring } from "react-motion";
+import type { DispatchObject } from "../types";
 
 /*****************************
  ******************************
@@ -57,9 +60,14 @@ const inputSpringConfig = {
   damping: 20
 };
 
-interface InputProps {}
+type InputProps = {
+  dispatch: (obj: DispatchObject) => void,
+  inputText: string
+};
 
-interface InputState {}
+type InputState = {
+  isFocused: boolean
+};
 
 class Input extends Component<InputProps, InputState> {
   constructor(props: InputProps) {
@@ -89,7 +97,7 @@ class Input extends Component<InputProps, InputState> {
     if (event.key === "Enter" && event.target.value) {
       this.props.dispatch({
         type: "INSERT_TODO",
-        id: Date.now(),
+        id: Date.now().toString(),
         text: this.props.inputText
       });
       event.target.blur();
