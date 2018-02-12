@@ -27,6 +27,7 @@ type EditInputProps = {
   id: string,
   editText: string
 };
+
 /*****************************/
 
 class EditInput extends Component<EditInputProps> {

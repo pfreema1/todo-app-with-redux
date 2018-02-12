@@ -1,3 +1,5 @@
+//@flow
+
 import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import stylingGlobals from "../StylingGlobals";
@@ -5,6 +7,7 @@ import { connect } from "react-redux";
 import { Motion, TransitionMotion, spring } from "react-motion";
 import RemoveWrapper from "./RemoveWrapper";
 import EditInput from "./EditInput";
+import type { DispatchObject, TodoObject } from "../types";
 
 /*****************************
  ******************************
@@ -107,8 +110,14 @@ const willLeave = () => {
 };
 
 /*****************************/
+type ToDosProps = {
+  dispatch: (obj: DispatchObject) => void,
+  todos: Array<TodoObject>
+};
 
-class ToDos extends Component {
+/*****************************/
+
+class ToDos extends Component<ToDosProps> {
   handleCheckBoxClick = id => {
     this.props.dispatch({ type: "TOGGLE_TODO_FINISH", id: id });
   };
@@ -165,7 +174,9 @@ class ToDos extends Component {
       >
         {interpStyles => (
           <ul>
-            {interpStyles.map(config => {
+            {interpStyles.map((config: any) => {
+              console.log("config:  ", config);
+
               return (
                 <li
                   style={{

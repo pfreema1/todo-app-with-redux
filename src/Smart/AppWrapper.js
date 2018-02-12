@@ -1,3 +1,5 @@
+//@flow
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
@@ -6,6 +8,7 @@ import Input from "./Input";
 import Todos from "./ToDos";
 import Filters from "./Filters";
 import { connect } from "react-redux";
+import type { DispatchObject } from "../types";
 
 const Wrapper = styled.div`
   background: ${stylingGlobals.bgColor};
@@ -26,7 +29,15 @@ const Wrapper = styled.div`
   }
 `;
 
-class AppWrapper extends Component {
+/*****************************/
+
+type AppWrapperProps = {
+  dispatch: (obj: DispatchObject) => void
+};
+
+/*****************************/
+
+class AppWrapper extends Component<AppWrapperProps> {
   constructor(props) {
     super(props);
 
@@ -37,7 +48,6 @@ class AppWrapper extends Component {
   matchFilterToRoute = pathname => {
     if (pathname.indexOf("active") !== -1) {
       //set active filter
-
       this.props.dispatch({ type: "CHANGE_FILTER", filter: "active" });
     } else if (pathname.indexOf("completed") !== -1) {
       //set completed filter
