@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   height: 30px;
@@ -15,7 +16,9 @@ const Wrapper = styled.div`
 
 const AllWrapper = styled.div`
   &:hover {
-    border: 1px solid RGBA(0, 0, 0, 0.1);
+    border: 1px solid
+      ${props =>
+        props.visibilityFilter === "all" ? "RGBA(0,0,0,0.1)" : "transparent"};
   }
   border: 1px solid
     ${props =>
@@ -31,7 +34,11 @@ const AllWrapper = styled.div`
 
 const ActiveWrapper = styled.div`
   &:hover {
-    border: 1px solid RGBA(0, 0, 0, 0.1);
+    border: 1px solid
+      ${props =>
+        props.visibilityFilter === "active"
+          ? "RGBA(0,0,0,0.1)"
+          : "transparent"};
   }
   border: 1px solid
     ${props =>
@@ -47,7 +54,11 @@ const ActiveWrapper = styled.div`
 
 const CompletedWrapper = styled.div`
   &:hover {
-    border: 1px solid RGBA(0, 0, 0, 0.1);
+    border: 1px solid
+      ${props =>
+        props.visibilityFilter === "completed"
+          ? "RGBA(0,0,0,0.1)"
+          : "transparent"};
   }
   border: 1px solid
     ${props =>
@@ -79,27 +90,33 @@ class Filters extends Component {
   render() {
     return (
       <Wrapper>
-        <AllWrapper
-          id="all"
-          onClick={this.handleClick}
-          visibilityFilter={this.props.visibilityFilter}
-        >
-          All
-        </AllWrapper>
-        <ActiveWrapper
-          id="active"
-          onClick={this.handleClick}
-          visibilityFilter={this.props.visibilityFilter}
-        >
-          Active
-        </ActiveWrapper>
-        <CompletedWrapper
-          id="completed"
-          onClick={this.handleClick}
-          visibilityFilter={this.props.visibilityFilter}
-        >
-          Completed
-        </CompletedWrapper>
+        <Link to="/" style={{ textDecoration: `none` }}>
+          <AllWrapper
+            id="all"
+            onClick={this.handleClick}
+            visibilityFilter={this.props.visibilityFilter}
+          >
+            All
+          </AllWrapper>
+        </Link>
+        <Link to="/active" style={{ textDecoration: `none` }}>
+          <ActiveWrapper
+            id="active"
+            onClick={this.handleClick}
+            visibilityFilter={this.props.visibilityFilter}
+          >
+            Active
+          </ActiveWrapper>
+        </Link>
+        <Link to="/completed" style={{ textDecoration: `none` }}>
+          <CompletedWrapper
+            id="completed"
+            onClick={this.handleClick}
+            visibilityFilter={this.props.visibilityFilter}
+          >
+            Completed
+          </CompletedWrapper>
+        </Link>
       </Wrapper>
     );
   }

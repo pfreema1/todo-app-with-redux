@@ -1,28 +1,9 @@
 import React, { Component } from "react";
-import styled from "styled-components";
-import stylingGlobals from "../StylingGlobals";
-import Header from "../Dumb/Header";
-import Input from "./Input";
 import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
-import Todos from "./ToDos";
-import Filters from "./Filters";
-
-/*****************************
- ******************************
- **
- **		Styling
- **
- ******************************
- ******************************/
-const AppWrapper = styled.div`
-  background: ${stylingGlobals.bgColor};
-  height: 100%;
-  // font-family: ${stylingGlobals.font};
-  color: ${stylingGlobals.fontColor};
-  font-weight: 100;
-`;
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import AppWrapper from "./AppWrapper";
 
 /*****************************
  ******************************
@@ -188,15 +169,34 @@ interface AppProps {}
 interface AppState {}
 
 class App extends Component<AppProps, AppState> {
+  componentDidMount() {
+    //this handles updating the stores' visibility field
+    //when the back/forward button is hit, this function will run
+    window.onpopstate = () => {
+      const pathname = window.location.href.slice(
+        window.location.href.lastIndexOf("/") + 1,
+        window.location.href.length
+      );
+
+      if (pathname.indexOf("active") !== -1) {
+        store.dispatch({ type: "CHANGE_FILTER", filter: "active" });
+      } else if (pathname.indexOf("completed") !== -1) {
+        store.dispatch({ type: "CHANGE_FILTER", filter: "completed" });
+      } else if (pathname.length === 0) {
+        store.dispatch({ type: "CHANGE_FILTER", filter: "all" });
+      }
+    };
+  }
   render() {
     return (
       <Provider store={store}>
-        <AppWrapper>
-          <Header>todo</Header>
-          <Input />
-          <Filters />
-          <Todos />
-        </AppWrapper>
+        <Router>
+          <div>
+            {/*regex in path below makes it so the same component
+            will be rendered if at any of these paths: (root), 'active', or 'completed'*/}
+            <Route exact path="/(|active|completed)/" component={AppWrapper} />
+          </div>
+        </Router>
       </Provider>
     );
   }
