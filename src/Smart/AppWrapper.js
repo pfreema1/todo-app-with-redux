@@ -10,9 +10,20 @@ import { connect } from "react-redux";
 const Wrapper = styled.div`
   background: ${stylingGlobals.bgColor};
   height: 100%;
+  // max-width: 400px;
   // font-family: ${stylingGlobals.font};
   color: ${stylingGlobals.fontColor};
   font-weight: 100;
+
+  @media(min-width: 767px) {
+    width: 500px;
+    max-width: 500px;
+    min-height: 650px;
+    border: 1px solid RGBA(0,0,0,0.05); 
+    border-radius: 5px;
+    margin-top: 50px;
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.15);
+  }
 `;
 
 class AppWrapper extends Component {

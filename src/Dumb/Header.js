@@ -19,6 +19,10 @@ const Header = styled.div`
   align-items: center;
   height: 110px;
   font-size: 60px;
+
+  @media (min-width: 767px) {
+    border-radius: 5px;
+  }
 `;
 
 export default Header;

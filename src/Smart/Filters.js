@@ -50,6 +50,12 @@ const ActiveWrapper = styled.div`
       ? "RGBA(80, 79, 92, 0.7)"
       : "RGBA(80, 79, 92, 0.3)"};
   transition: all 0.3s;
+  margin-left: 15px;
+  margin-right: 15px;
+  @media (min-width: 500px) {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 `;
 
 const CompletedWrapper = styled.div`

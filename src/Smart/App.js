@@ -4,6 +4,7 @@ import { applyMiddleware, createStore } from "redux";
 import logger from "redux-logger";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AppWrapper from "./AppWrapper";
+import AppBackground from "../Dumb/AppBackground";
 
 /*****************************
  ******************************
@@ -191,11 +192,11 @@ class App extends Component<AppProps, AppState> {
     return (
       <Provider store={store}>
         <Router>
-          <div>
+          <AppBackground>
             {/*regex in path below makes it so the same component
             will be rendered if at any of these paths: (root), 'active', or 'completed'*/}
             <Route exact path="/(|active|completed)/" component={AppWrapper} />
-          </div>
+          </AppBackground>
         </Router>
       </Provider>
     );
