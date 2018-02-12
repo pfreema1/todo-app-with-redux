@@ -8,7 +8,7 @@ import { ic_close } from "react-icons-kit/md/ic_close";
 import { ic_edit } from "react-icons-kit/md/ic_edit";
 import type { DispatchObject, TodoObject } from "../types";
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   width: 20%;
   display: flex;
   justify-content: space-between;
@@ -17,11 +17,20 @@ const Wrapper = styled.div`
   height: 100%;
   box-sizing: border-box;
   padding: 10px 0 10px 0;
+
+  @media (min-width: 800px) {
+    opacity: 0;
+    transition: all 0.3s;
+  }
 `;
 
-const DeleteWrapper = styled.div``;
+const DeleteWrapper = styled.div`
+  cursor: pointer;
+`;
 
-const EditWrapper = styled.div``;
+const EditWrapper = styled.div`
+  cursor: pointer;
+`;
 
 /*****************************/
 
@@ -61,7 +70,7 @@ class RemoveWrapper extends Component<RemoveWrapperProps, RemoveWrapperState> {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper className="meow">
         <DeleteWrapper
           onClick={this.handleDeleteClick.bind(null, this.props.id)}
         >

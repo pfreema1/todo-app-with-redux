@@ -8,6 +8,7 @@ import { Motion, TransitionMotion, spring } from "react-motion";
 import RemoveWrapper from "./RemoveWrapper";
 import EditInput from "./EditInput";
 import type { DispatchObject, TodoObject } from "../types";
+import { Wrapper } from "./RemoveWrapper";
 
 /*****************************
  ******************************
@@ -26,6 +27,11 @@ const TodoWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  @media (min-width: 800px) {
+    &:hover ${Wrapper} {
+      opacity: 1;
+    }
+  }
 `;
 
 const CompletionWrapper = styled.div`
@@ -53,6 +59,7 @@ const CheckBox = styled.div`
   width: 25px;
   border: 2px solid RGBA(156, 166, 211, 1);
   -webkit-backface-visibility: hidden;
+  cursor: pointer;
 `;
 
 const checkAnimation = keyframes`

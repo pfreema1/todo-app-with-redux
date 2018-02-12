@@ -23,14 +23,28 @@ const initialState = {
   todos: [
     {
       id: 1 + "str",
-      text: "foofoo",
+      text: "learn more about TDD",
       finished: false,
       keyTick: Date.now() + "str",
       isBeingEdited: false
     },
     {
       id: 2 + "str",
-      text: "THE RAIN IN SPAIN FALLS MAINLY ON THE PLAIN",
+      text: "learn redux",
+      finished: true,
+      keyTick: Date.now() + "str",
+      isBeingEdited: false
+    },
+    {
+      id: 3 + "str",
+      text: "practice with react-motion some more",
+      finished: true,
+      keyTick: Date.now() + "str",
+      isBeingEdited: false
+    },
+    {
+      id: 4 + "str",
+      text: "go climbing",
       finished: false,
       keyTick: Date.now() + "str",
       isBeingEdited: false
