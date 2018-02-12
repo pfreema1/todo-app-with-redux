@@ -19,6 +19,8 @@ const Wrapper = styled.textarea`
   border: none;
   resize: none;
   vertical-align: middle;
+  box-sizing: border-box;
+  padding-top: 10px;
 `;
 
 /*****************************/
@@ -56,6 +58,8 @@ class EditInput extends Component<EditInputProps> {
         id: this.props.id,
         text: event.target.value
       });
+    } else if (event.key === "Escape") {
+      this.inputEl.blur();
     }
   };
 

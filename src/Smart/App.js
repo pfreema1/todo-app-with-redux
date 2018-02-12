@@ -177,7 +177,7 @@ const reducer = (state = initialState, action) => {
   }
 };
 
-const store = createStore(reducer, applyMiddleware(logger));
+const store = createStore(reducer /*, applyMiddleware(logger)*/);
 
 /*****************************/
 
