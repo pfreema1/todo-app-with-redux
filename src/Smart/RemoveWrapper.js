@@ -1,9 +1,12 @@
+// @flow
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Icon from "react-icons-kit";
 import { ic_close } from "react-icons-kit/md/ic_close";
 import { ic_edit } from "react-icons-kit/md/ic_edit";
+import type { DispatchObject, TodoObject } from "../types";
 
 const Wrapper = styled.div`
   width: 20%;
@@ -20,13 +23,20 @@ const DeleteWrapper = styled.div``;
 
 const EditWrapper = styled.div``;
 
-class RemoveWrapper extends Component {
-  constructor(props) {
-    super(props);
+/*****************************/
 
-    this.state = {};
-  }
+type RemoveWrapperProps = {
+  dispatch: (obj: DispatchObject) => void,
+  editText: string,
+  todos: Array<TodoObject>,
+  id: string
+};
 
+type RemoveWrapperState = {};
+
+/*****************************/
+
+class RemoveWrapper extends Component<RemoveWrapperProps, RemoveWrapperState> {
   handleDeleteClick = id => {
     this.props.dispatch({ type: "DELETE_TODO", id });
   };

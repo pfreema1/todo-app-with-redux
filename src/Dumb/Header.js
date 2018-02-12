@@ -1,14 +1,7 @@
-// import React, { Component } from "react";
+// @flow
 import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 
-/*****************************
- ******************************
- **
- **		Styling
- **
- ******************************
- ******************************/
 const Header = styled.div`
   background: ${stylingGlobals.bgColor};
   font-family: ${stylingGlobals.font};
