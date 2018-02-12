@@ -1,7 +1,10 @@
+// @flow
+
 import React, { Component } from "react";
 import styled from "styled-components";
 import stylingGlobals from "../StylingGlobals";
 import { connect } from "react-redux";
+import type { DispatchObject } from "../types";
 
 const Wrapper = styled.textarea`
   display: inline;
@@ -18,7 +21,15 @@ const Wrapper = styled.textarea`
   vertical-align: middle;
 `;
 
-class EditInput extends Component {
+/*****************************/
+type EditInputProps = {
+  dispatch: (obj: DispatchObject) => void,
+  id: string,
+  editText: string
+};
+/*****************************/
+
+class EditInput extends Component<EditInputProps> {
   componentDidMount() {
     this.inputEl.focus();
   }
